@@ -42,15 +42,25 @@ booksRouter.route('/books/:id')
 });
 
 booksRouter.route('/books/:id/image')
-.post(upload.single('file'), async (request, response) => {
-  console.log(request.file.filename);
-  const updateResult = await knex('book').where('id', request.params.id).update({image_file_name: request.file.filename});
-  response.json({success: true});
+.post(upload.single('file'), async (request, response, next) => {
+  try {
+    console.log(request.file.filename);
+    const updateResult = await knex('book').where('id', request.params.id).update({image_file_name: request.file.filename});
+
+    if (updateResult) {
+      const books = await knex('book').where('id', request.params.id).select('id', 'title', 'image_file_name')
+      response.json(books[0])
+    } else {
+      response.json({success: false, message: "failed to update the book"})
+    }
+  } catch (err) {
+    next(err)
+  }
 });
 
 booksRouter.route('/books/image/:filename')
 .get(async (request, response) => {
-  response.sendFile(`/Users/i850918/IdeaProjects/udemy/modern-react-with-redux/books-server/uploads/${request.params.filename}`)
+  response.sendFile(`C:\\Users\\rstru\\IdeaProjects\\books-server\\uploads\\${request.params.filename}`)
   
 });
 
