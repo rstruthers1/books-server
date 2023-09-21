@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config()
 const app = express();
 const bookRouter = require('./routes/books')
 const albumRouter = require('./routes/albums')
