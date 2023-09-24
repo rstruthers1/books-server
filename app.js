@@ -15,7 +15,7 @@ app.use(cors());
 app.use('/', bookRouter);
 app.use('/', albumRouter)
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   console.error(err.stack)
   res.status(500).send(err)
 });
