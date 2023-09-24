@@ -18,7 +18,7 @@ app.use('/', albumRouter)
 app.use((err, req, res) => {
   console.error(err.stack)
   res.status(500).send(err)
-})
+});
 
 const PORT = 8081;
 app.listen(PORT, () => {
