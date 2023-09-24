@@ -59,8 +59,12 @@ booksRouter.route('/books/:id/image')
 });
 
 booksRouter.route('/books/image/:filename')
-.get(async (request, response) => {
-  response.sendFile(`C:\\Users\\rstru\\IdeaProjects\\books-server\\uploads\\${request.params.filename}`)
+.get(async (request, response, next) => {
+  try {
+    response.sendFile(`${process.env.IMAGE_DIR}/${request.params.filename}`)
+  } catch (err) {
+    next(err)
+  }
   
 });
 

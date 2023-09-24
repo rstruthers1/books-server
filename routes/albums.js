@@ -4,8 +4,12 @@ const albumsRouter = express.Router();
 
 albumsRouter.route('/albums')
 .get(async (request, response, next) => {
-  const albums = await knex('album')
-  response.json(albums);
+  try {
+    const albums = await knex('album')
+    response.json(albums);
+  } catch (err) {
+    next(err)
+  }
 });
 
 albumsRouter.route('/albums')

@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config()
 const app = express();
 const bookRouter = require('./routes/books')
 const albumRouter = require('./routes/albums')
@@ -14,7 +15,7 @@ app.use(cors());
 app.use('/', bookRouter);
 app.use('/', albumRouter)
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   console.error(err.stack)
   res.status(500).send(err)
 })
