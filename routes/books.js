@@ -4,9 +4,13 @@ const booksRouter = express.Router();
 const upload = require('../config/upload')
 
 booksRouter.route('/books')
-.get(async (request, response) => {
-  const books = await knex('book')
-  response.json(books);
+.get(async (request, response, next) => {
+  try {
+    const books = await knex('book')
+    response.json(books);
+  } catch (err) {
+    next(err)
+  }
 });
 
 booksRouter.route('/books')
