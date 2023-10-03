@@ -1,3 +1,4 @@
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'password1'
 
 CREATE USER 'bookappuser'@'%' IDENTIFIED BY 'password1';
+GRANT ALL PRIVILEGES ON books.* TO 'bookappuser'@'%';

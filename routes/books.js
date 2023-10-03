@@ -45,6 +45,20 @@ booksRouter.route('/books/:id')
   }
 });
 
+booksRouter.route('/books/:id')
+    .get(async (request, response, next) => {
+      try {
+        const books = await knex('book').where('id', request.params.id).select("*")
+        if (books  && books.length > 0) {
+          response.json(books[0])
+        } else {
+          response.json({success: false, message: "failed to fetch book"})
+        }
+      } catch(err) {
+        next(err)
+      }
+    });
+
 booksRouter.route('/books/:id/image')
 .post(upload.single('file'), async (request, response, next) => {
   try {
