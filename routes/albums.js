@@ -18,7 +18,7 @@ albumsRouter.route('/albums')
   try {
     const insertResult = await knex('album').insert({name: request.body.name, artist: request.body.artist});
     if (insertResult && insertResult.length > 0) {
-      const albums = await knex('album').where('id', insertResult[0]).select('id', 'name')
+      const albums = await knex('album').where('id', insertResult[0]).select('*')
       response.json(albums[0])
     } else {
       response.json({success: false, message: "failed to insert the new album"})
@@ -81,7 +81,7 @@ albumsRouter.route('/albums/:id/image')
         const updateResult = await knex('album').where('id', request.params.id).update({image_file_name: request.file.filename});
 
         if (updateResult) {
-          const albums = await knex('book').where('id', request.params.id).select('*')
+          const albums = await knex('album').where('id', request.params.id).select('*')
           response.json(albums[0])
         } else {
           response.json({success: false, message: "failed to upload album image"})
