@@ -3,6 +3,7 @@ require('dotenv').config()
 const app = express();
 const bookRouter = require('./routes/books')
 const albumRouter = require('./routes/albums')
+const videoRouter = require('./routes/videos')
 
 const cors = require("cors");
 
@@ -14,6 +15,7 @@ app.use(cors());
 
 app.use('/', bookRouter);
 app.use('/', albumRouter)
+app.use('/', videoRouter)
 
 app.use((err, req, res, next) => {
   console.error(err.stack)
